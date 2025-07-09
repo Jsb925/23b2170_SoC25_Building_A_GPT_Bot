@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat w/ Gemini</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; background-image:url("trees.jpeg");background-repeat:no-repeat;background-size:cover; }
+    #chat { max-width: 600px; margin: auto; }
+    .bubble { padding: 10px; border-radius: 8px; margin: 10px 0; }
+    .user { background: #d8f1ff; }
+    .bot { background: #d9ffd8; }
+  </style>
+</head>
+<body>
+  <div id="chat"></div>
+
+  <input id="input" type="text" placeholder="Say something..." style="width:70%">
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById("input");
+      const chat = document.getElementById("chat");
+      const message = input.value;
+      if (!message.trim()) return;
+
+      // 🧍 Display user message
+      chat.innerHTML += `<div class="bubble user"><b>You:</b> ${message}</div>`;
+      input.value = "";
+
+      // 🔁 Send message to server (backend)
+      const res = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
+      });
+
+      // 💬 Display Gemini's reply
+      const data = await res.json();
+      chat.innerHTML += `<div class="bubble bot"><b>Gemini:</b> ${data.reply}</div>`;
+    }
+  </script>
+</body>
+</html>
