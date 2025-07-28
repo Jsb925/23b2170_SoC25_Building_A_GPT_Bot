@@ -1,4 +1,5 @@
 # SoC25 - Building a GPT Bot
+Videos for Milestone 4, 5, 6 are in the respective folder
 ## Milestone projects:
 ### Milestone 1: Similar Sentence Finder
 Uses Word2Vec embeddings to find the 5 most similar sentences to the input
